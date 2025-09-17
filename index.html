@@ -3,42 +3,60 @@
 <head>
 <meta charset="utf-8">
 <title>USC QRs</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏃</text></svg>">
+
 <style>
   body { font-family: sans-serif; background: #f0f0f0; }
+  #search { margin: 20px; padding: 8px; width: 250px; font-size: 14px; }
   .item { display: inline-block; margin: 10px; text-align: center; }
-  img { max-width: 200px; display: block; cursor: pointer; }
+  img { max-width: 200px; display: block; cursor: pointer; border-radius: 6px; }
   .title { margin-top: 6px; font-size: 14px; color: #333; }
 </style>
 </head>
 <body>
 <h1>USC QRs</h1>
+
+<input type="text" id="search" placeholder="Search by class">
+
 <div id="gallery"></div>
 
 <script>
 const gallery = document.getElementById("gallery");
+const searchInput = document.getElementById("search");
+let allFiles = [];
+function render(files) {
+  gallery.innerHTML = "";
+  files.forEach(entry => {
+    const container = document.createElement("div");
+    container.className = "item";
 
+    const img = document.createElement("img");
+    img.src = `images/${entry.file}`;
+    img.alt = entry.title;
+    img.onclick = () => window.open(img.src, "_blank");
+
+    const caption = document.createElement("div");
+    caption.className = "title";
+    caption.textContent = entry.title;
+
+    container.appendChild(img);
+    container.appendChild(caption);
+    gallery.appendChild(container);
+  });
+}
 fetch("images/index.json")
   .then(res => res.json())
   .then(files => {
-    files.forEach(entry => {
-      const container = document.createElement("div");
-      container.className = "item";
-
-      const img = document.createElement("img");
-      img.src = `images/${entry.file}`;
-      img.alt = entry.title;
-      img.onclick = () => window.open(img.src, "_blank");
-
-      const caption = document.createElement("div");
-      caption.className = "title";
-      caption.textContent = entry.title;
-
-      container.appendChild(img);
-      container.appendChild(caption);
-      gallery.appendChild(container);
-    });
-  })
-  .catch(err => console.error("Error loading index.json:", err));
+    allFiles = files;
+    render(allFiles);
+  });
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase();
+  const filtered = allFiles.filter(entry =>
+    entry.title.toLowerCase().includes(query)
+  );
+  render(filtered);
+});
 </script>
 </body>
 </html>
