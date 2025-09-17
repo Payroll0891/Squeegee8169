@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>USC QRs</title>
+<style>
+  body { font-family: sans-serif; background: #f0f0f0; }
+  .item { display: inline-block; margin: 10px; text-align: center; }
+  img { max-width: 200px; display: block; cursor: pointer; }
+  .title { margin-top: 6px; font-size: 14px; color: #333; }
+</style>
+</head>
+<body>
+<h1>USC QRs</h1>
+<div id="gallery"></div>
+
+<script>
+const gallery = document.getElementById("gallery");
+
+fetch("images/index.json")
+  .then(res => res.json())
+  .then(files => {
+    files.forEach(entry => {
+      const container = document.createElement("div");
+      container.className = "item";
+
+      const img = document.createElement("img");
+      img.src = `images/${entry.file}`;
+      img.alt = entry.title;
+      img.onclick = () => window.open(img.src, "_blank");
+
+      const caption = document.createElement("div");
+      caption.className = "title";
+      caption.textContent = entry.title;
+
+      container.appendChild(img);
+      container.appendChild(caption);
+      gallery.appendChild(container);
+    });
+  })
+  .catch(err => console.error("Error loading index.json:", err));
+</script>
+</body>
+</html>
+
