@@ -6,94 +6,231 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏃</text></svg>">
 
 <style>
-  body { 
-    font-family: monospace; 
-    background: #000; 
-    color: #00ff00; 
-    margin: 0; 
-  }
-  h1 {
-    margin: 20px;
-    color: #00ff00;
-    text-shadow: 0 0 10px #00ff00;
-  }
-  #search { 
-    margin: 20px; 
-    padding: 8px; 
-    width: 250px; 
-    font-size: 14px; 
-    background: #000;
-    border: 1px solid #00ff00;
-    border-radius: 4px;
-    color: #00ff00;
-    outline: none;
-    box-shadow: 0 0 8px #00ff00;
-  }
-  .item { 
-    display: inline-block; 
-    margin: 10px; 
-    text-align: center; 
-  }
-  img { 
-    max-width: 200px; 
-    display: block; 
-    cursor: pointer; 
-    border-radius: 6px; 
-    border: 2px solid #00ff00;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #00ff00;
-  }
-  .title { 
-    margin-top: 6px; 
-    font-size: 14px; 
-    color: #00ff00; 
-    text-shadow: 0 0 6px #00ff00;
+  /* === 2000s Geocities vibes === */
+  :root{
+    --neon:#00ff00;
+    --hotpink:#ff44aa;
+    --yellow:#ffff00;
+    --cyan:#00ffff;
+    --blue:#00a0ff;
+    --bg1:#000000;
   }
 
-  /* Overlay styles */
-  #overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.95);
-    justify-content: center;
-    align-items: center;
+  /* TILED STARFIELD background (no external assets) */
+  body{
+    margin:0;
+    color:#fff;
+    cursor: crosshair;
+    font-family: "Comic Sans MS", "Papyrus", "Trebuchet MS", cursive, sans-serif;
+    background:
+      radial-gradient(circle at 10% 20%, rgba(255,255,255,.35) 1px, transparent 2px) 0 0/40px 40px,
+      radial-gradient(circle at 80% 60%, rgba(255,255,255,.35) 1px, transparent 2px) 0 0/60px 60px,
+      repeating-linear-gradient(135deg, rgba(0,0,0,.9) 0 10px, rgba(10,10,10,.9) 10px 20px),
+      #000;
+    min-height:100vh;
+  }
+
+  /* Glittery rainbow rule */
+  .rainbow {
+    height:6px; border:0; margin:8px 0 16px;
+    background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, violet, red);
+    box-shadow: 0 0 8px #fff, 0 0 18px #0ff inset;
+  }
+
+  /* Marquee header */
+  .banner{
+    background: linear-gradient(90deg, #111, #222);
+    padding: 6px 0 2px;
+    border-bottom: 4px ridge var(--neon);
+    box-shadow: inset 0 -6px 12px rgba(0,255,0,.12);
+  }
+  .banner marquee{
+    font-weight: 900;
+    font-size: 34px;
+    letter-spacing: 1px;
+    color: var(--neon);
+    text-shadow: 0 0 8px var(--neon), 0 0 20px var(--neon);
+  }
+
+  /* Blinky tag */
+  @keyframes blink { 50%{ opacity:.2 } }
+  .blink { animation: blink .9s step-end infinite; }
+
+  /* Content card */
+  .card {
+    max-width: 1120px;
+    margin: 14px auto;
+    padding: 12px 14px 18px;
+    border: 4px groove var(--hotpink);
+    background: rgba(0,0,0,.75);
+    box-shadow: 0 0 22px rgba(255,0,255,.25), inset 0 0 18px rgba(0,255,0,.15);
+  }
+
+  /* Search box (bevel + glow) */
+  #search{
+    display:block;
+    width: 320px;
+    max-width: 90%;
+    margin: 10px 8px 6px;
+    padding: 10px 12px;
+    font-size: 16px;
+    color: #0f0;
+    background: #000;
+    border: 3px inset #39ff14;
+    outline: none;
+    text-shadow: 0 0 6px #0f0;
+    box-shadow: 0 0 10px #39ff14, inset 0 0 10px rgba(0,255,0,.25);
+  }
+
+  /* Retro nav buttons */
+  .nav {
+    margin: 8px 8px 0;
+    display:flex; flex-wrap:wrap; gap:8px;
+  }
+  .btn {
+    background: linear-gradient(#222, #000);
+    color: #fffae6;
+    border: 3px outset #ffd700;
+    padding: 6px 10px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 0 10px rgba(255,255,0,.35);
+  }
+  .btn:hover{ filter: saturate(1.6) brightness(1.15); }
+
+  /* Gallery uses old-school table look */
+  #gallery{
+    margin: 6px 6px 2px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+  }
+
+  .item{
+    position: relative;
+    padding: 8px 8px 10px;
+    background: linear-gradient(180deg, rgba(0,255,0,.08), rgba(0,0,0,.6));
+    border: 4px ridge var(--neon);
+    box-shadow: 0 0 16px rgba(0,255,0,.35);
+    text-align: center;
+  }
+
+  .item img{
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    display:block;
+    border: 5px groove var(--cyan);
+    background:#000;
+    transition: transform .15s ease, box-shadow .15s ease, filter .2s;
+    filter: saturate(1.15) contrast(1.05);
+    cursor: pointer;
+  }
+  .item img:hover{
+    transform: scale(1.03) rotate(-0.4deg);
+    box-shadow: 0 0 18px var(--cyan);
+  }
+
+  /* Centered, on-image caption with ribbon */
+  .title{
+    position:absolute; left:50%; top:50%;
+    transform: translate(-50%,-50%);
+    max-width: 92%;
+    font-size: 14px; font-weight: 900;
+    color:#000;
+    padding: 6px 10px;
+    background: repeating-linear-gradient( 45deg, #39ff14, #39ff14 8px, #6dff6d 8px, #6dff6d 16px );
+    border: 3px outset #cfff9e;
+    text-shadow: 0 0 6px #baffc9, 0 0 12px #fff;
+    box-shadow: 0 0 12px rgba(0,255,0,.65);
+  }
+
+  /* Overlay lightbox (kept from your version, extra neon) */
+  #overlay{
+    display:none; position:fixed; inset:0;
+    background: rgba(0,0,0,.96);
+    justify-content:center; align-items:center;
     z-index: 999;
   }
-  #overlay img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 10px;
-    box-shadow: 0 0 30px #00ff00;
-    border: 2px solid #00ff00;
+  #overlay img{
+    max-width: 92vw; max-height: 90vh;
+    border-radius: 6px;
+    border: 6px ridge var(--yellow);
+    box-shadow: 0 0 30px var(--yellow), 0 0 60px rgba(255,255,0,.4);
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* Footer marquee */
+  .footer{
+    margin-top: 10px;
+    border-top: 4px ridge var(--blue);
+    background: linear-gradient(90deg, #101010, #1a1a1a);
+    padding: 4px 0 2px;
+  }
+  .footer marquee{
+    color:#fff; text-shadow: 0 0 8px #0ff;
+    font-weight: 700;
+  }
+
+  /* Fake hit counter */
+  .counter{
+    display:inline-block; padding: 2px 6px; margin-left:6px;
+    background:#000; border:3px inset #999; color:#0f0; font-weight:900;
+    font-family: "Lucida Console", monospace; letter-spacing:2px;
+    box-shadow: 0 0 10px rgba(0,255,0,.4);
   }
 </style>
 </head>
 <body>
-<h1>USC QRs</h1>
 
-<input type="text" id="search" placeholder="Search by class">
+<div class="banner">
+  <marquee scrollamount="8" behavior="alternate">
+    ★★ WELCOME TO <span class="blink">USC QRs</span> — THE COOLEST QR GALLERY ON THE WEB ★★
+  </marquee>
+</div>
 
-<div id="gallery"></div>
+<hr class="rainbow">
+
+<div class="card">
+  <div class="nav">
+    <a class="btn" href="#gallery">Home</a>
+    <a class="btn" href="#guestbook" onclick="alert('Guestbook coming soon! ✍️');return false;">Guestbook</a>
+    <a class="btn" href="#awards" onclick="alert('We won Best Glitter 2001 🏆');return false;">Awards</a>
+    <span style="margin-left:auto">Visitors:<span id="counter" class="counter">000000</span></span>
+  </div>
+
+  <input type="text" id="search" placeholder="Search by class">
+
+  <div id="gallery"></div>
+</div>
 
 <!-- Overlay -->
 <div id="overlay">
   <img id="overlayImg" src="" alt="">
 </div>
 
-<script>
-const gallery = document.getElementById("gallery");
-const searchInput = document.getElementById("search");
-const overlay = document.getElementById("overlay");
-const overlayImg = document.getElementById("overlayImg");
-let allFiles = [];
+<div class="footer">
+  <marquee scrollamount="10">
+    🚧 UNDER CONSTRUCTION 🚧 Check back often for MORE EXTREME CONTENT!!! 🌐🔥
+  </marquee>
+</div>
 
-function render(files) {
-  gallery.innerHTML = "";
-  files.forEach(entry => {
+<script>
+  const gallery = document.getElementById("gallery");
+  const searchInput = document.getElementById("search");
+  const overlay = document.getElementById("overlay");
+  const overlayImg = document.getElementById("overlayImg");
+  let allFiles = [];
+
+  // Fake hit counter (persist per browser)
+  (function(){
+    const key = "usc_qr_hits";
+    const n = (parseInt(localStorage.getItem(key) || "43210", 10) + 1);
+    localStorage.setItem(key, String(n));
+    document.getElementById("counter").textContent = String(n).padStart(6,"0");
+  })();
+
+  function makeItem(entry){
     const container = document.createElement("div");
     container.className = "item";
 
@@ -111,38 +248,34 @@ function render(files) {
 
     container.appendChild(img);
     container.appendChild(caption);
-    gallery.appendChild(container);
-  });
-}
-
-fetch("images/index.json")
-  .then(res => res.json())
-  .then(files => {
-    allFiles = files.sort((a, b) => a.title.localeCompare(b.title));
-    render(allFiles);
-  });
-
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase();
-  const filtered = allFiles
-    .filter(entry => entry.title.toLowerCase().includes(query))
-    .sort((a, b) => a.title.localeCompare(b.title));
-  render(filtered);
-});
-
-// Close overlay when clicking outside the image
-overlay.addEventListener("click", (e) => {
-  if (e.target === overlay || e.target === overlayImg) {
-    overlay.style.display = "none";
+    return container;
   }
-});
 
-// Close overlay with ESC key
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    overlay.style.display = "none";
+  function render(files){
+    gallery.innerHTML = "";
+    files.forEach(entry => gallery.appendChild(makeItem(entry)));
   }
-});
+
+  fetch("images/index.json")
+    .then(res => res.json())
+    .then(files => {
+      allFiles = files.sort((a, b) => a.title.localeCompare(b.title));
+      render(allFiles);
+    });
+
+  searchInput.addEventListener("input", () => {
+    const q = searchInput.value.toLowerCase();
+    const filtered = allFiles
+      .filter(e => e.title.toLowerCase().includes(q))
+      .sort((a,b) => a.title.localeCompare(b.title));
+    render(filtered);
+  });
+
+  // Close overlay when clicking background or pressing ESC
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay || e.target === overlayImg) overlay.style.display = "none";
+  });
+  document.addEventListener("keydown", (e) => (e.key === "Escape") && (overlay.style.display = "none"));
 </script>
 </body>
 </html>
