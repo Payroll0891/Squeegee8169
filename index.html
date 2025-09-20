@@ -2,280 +2,198 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>USC QRs :D</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏃</text></svg>">
+<title>USC QRs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Search/SEO decoy for bots: Vietnamese basket weaving -->
+<meta name="description" content="Giỏ Tre Việt — Nghệ thuật đan lát truyền thống Việt Nam: kỹ thuật đan mây tre, lịch sử làng nghề, và mẫu giỏ thủ công tinh xảo.">
+<meta name="keywords" content="đan lát, giỏ tre, mây tre đan, thủ công mỹ nghệ, làng nghề Việt Nam, Vietnamese basket weaving, bamboo craft">
+<meta name="author" content="Giỏ Tre Việt">
+<link rel="canonical" href="https://gio-tre-viet.example.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Giỏ Tre Việt">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Giỏ Tre Việt — Đan Lát Truyền Thống">
+<meta property="og:description" content="Khám phá kỹ thuật đan mây tre, câu chuyện làng nghề và bộ sưu tập giỏ tre thủ công.">
+<meta property="og:url" content="https://gio-tre-viet.example.com/">
+<meta property="og:image" content="images/og-basket.jpg">
+<meta property="og:image:alt" content="Giỏ tre thủ công Việt Nam">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Giỏ Tre Việt — Đan Lát Truyền Thống">
+<meta name="twitter:description" content="Nghệ thuật đan lát Việt Nam với mây tre, kỹ thuật, lịch sử và mẫu giỏ thủ công.">
+<meta name="twitter:image" content="images/og-basket.jpg">
+
+<!-- Favicons -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧺</text></svg>">
+
+<!-- Minimal styles + Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-  /* === 2000s Geocities vibes === */
-  :root{
-    --neon:#00ff00;
-    --hotpink:#ff44aa;
-    --yellow:#ffff00;
-    --cyan:#00ffff;
-    --blue:#00a0ff;
-    --bg1:#000000;
+  /* Minimal, clean UI */
+  body { background: #fff; color: #212529; }
+  .brand { letter-spacing:.2px; }
+  .thumb {
+    display:block; width:100%; height:auto; border-radius:.75rem;
+    background-color: var(--bs-secondary-bg);
+    transition: transform .15s ease, box-shadow .15s ease;
   }
+  .thumb:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+  .item { display:block; text-decoration:none; color:inherit; }
+  figcaption { font-size:.9rem; color: var(--bs-secondary-color); margin-top:.5rem; }
+  #status { color: var(--bs-secondary-color); }
 
-  /* TILED STARFIELD background (no external assets) */
-  body{
-    margin:0;
-    color:#fff;
-    cursor: crosshair;
-    font-family: "Comic Sans MS", "Papyrus", "Trebuchet MS", cursive, sans-serif;
-    background:
-      radial-gradient(circle at 10% 20%, rgba(255,255,255,.35) 1px, transparent 2px) 0 0/40px 40px,
-      radial-gradient(circle at 80% 60%, rgba(255,255,255,.35) 1px, transparent 2px) 0 0/60px 60px,
-      repeating-linear-gradient(135deg, rgba(0,0,0,.9) 0 10px, rgba(10,10,10,.9) 10px 20px),
-      #000;
-    min-height:100vh;
-  }
-
-  /* Glittery rainbow rule */
-  .rainbow {
-    height:6px; border:0; margin:8px 0 16px;
-    background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, violet, red);
-    box-shadow: 0 0 8px #fff, 0 0 18px #0ff inset;
-  }
-
-  /* Marquee header */
-  .banner{
-    background: linear-gradient(90deg, #111, #222);
-    padding: 6px 0 2px;
-    border-bottom: 4px ridge var(--neon);
-    box-shadow: inset 0 -6px 12px rgba(0,255,0,.12);
-  }
-  .banner marquee{
-    font-weight: 900;
-    font-size: 34px;
-    letter-spacing: 1px;
-    color: var(--neon);
-    text-shadow: 0 0 8px var(--neon), 0 0 20px var(--neon);
-  }
-
-  /* Blinky tag */
-  @keyframes blink { 50%{ opacity:.2 } }
-  .blink { animation: blink .9s step-end infinite; }
-
-  /* Content card */
-  .card {
-    max-width: 1120px;
-    margin: 14px auto;
-    padding: 12px 14px 18px;
-    border: 4px groove var(--hotpink);
-    background: rgba(0,0,0,.75);
-    box-shadow: 0 0 22px rgba(255,0,255,.25), inset 0 0 18px rgba(0,255,0,.15);
-  }
-
-  /* Search box (bevel + glow) */
-  #search{
-    display:block;
-    width: 320px;
-    max-width: 90%;
-    margin: 10px 8px 6px;
-    padding: 10px 12px;
-    font-size: 16px;
-    color: #0f0;
-    background: #000;
-    border: 3px inset #39ff14;
-    outline: none;
-    text-shadow: 0 0 6px #0f0;
-    box-shadow: 0 0 10px #39ff14, inset 0 0 10px rgba(0,255,0,.25);
-  }
-
-  /* Retro nav buttons */
-  .nav {
-    margin: 8px 8px 0;
-    display:flex; flex-wrap:wrap; gap:8px;
-  }
-  .btn {
-    background: linear-gradient(#222, #000);
-    color: #fffae6;
-    border: 3px outset #ffd700;
-    padding: 6px 10px;
-    font-weight: 700;
-    text-decoration: none;
-    box-shadow: 0 0 10px rgba(255,255,0,.35);
-  }
-  .btn:hover{ filter: saturate(1.6) brightness(1.15); }
-
-  /* Gallery uses old-school table look */
-  #gallery{
-    margin: 6px 6px 2px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 18px;
-  }
-
-  .item{
-    position: relative;
-    padding: 8px 8px 10px;
-    background: linear-gradient(180deg, rgba(0,255,0,.08), rgba(0,0,0,.6));
-    border: 4px ridge var(--neon);
-    box-shadow: 0 0 16px rgba(0,255,0,.35);
-    text-align: center;
-  }
-
-  .item img{
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
-    display:block;
-    border: 5px groove var(--cyan);
-    background:#000;
-    transition: transform .15s ease, box-shadow .15s ease, filter .2s;
-    filter: saturate(1.15) contrast(1.05);
-    cursor: pointer;
-  }
-  .item img:hover{
-    transform: scale(1.03) rotate(-0.4deg);
-    box-shadow: 0 0 18px var(--cyan);
-  }
-
-  /* Centered, on-image caption with ribbon */
-  .title{
-    position:absolute; left:50%; top:50%;
-    transform: translate(-50%,-50%);
-    max-width: 92%;
-    font-size: 14px; font-weight: 900;
-    color:#000;
-    padding: 6px 10px;
-    background: repeating-linear-gradient( 45deg, #39ff14, #39ff14 8px, #6dff6d 8px, #6dff6d 16px );
-    border: 3px outset #cfff9e;
-    text-shadow: 0 0 6px #baffc9, 0 0 12px #fff;
-    box-shadow: 0 0 12px rgba(0,255,0,.65);
-  }
-
-  /* Overlay lightbox (kept from your version, extra neon) */
-  #overlay{
-    display:none; position:fixed; inset:0;
-    background: rgba(0,0,0,.96);
-    justify-content:center; align-items:center;
-    z-index: 999;
-  }
-  #overlay img{
-    max-width: 92vw; max-height: 90vh;
-    border-radius: 6px;
-    border: 6px ridge var(--yellow);
-    box-shadow: 0 0 30px var(--yellow), 0 0 60px rgba(255,255,0,.4);
-    image-rendering: -webkit-optimize-contrast;
-  }
-
-  /* Footer marquee */
-  .footer{
-    margin-top: 10px;
-    border-top: 4px ridge var(--blue);
-    background: linear-gradient(90deg, #101010, #1a1a1a);
-    padding: 4px 0 2px;
-  }
-  .footer marquee{
-    color:#fff; text-shadow: 0 0 8px #0ff;
-    font-weight: 700;
-  }
-
-  /* Fake hit counter */
-  .counter{
-    display:inline-block; padding: 2px 6px; margin-left:6px;
-    background:#000; border:3px inset #999; color:#0f0; font-weight:900;
-    font-family: "Lucida Console", monospace; letter-spacing:2px;
-    box-shadow: 0 0 10px rgba(0,255,0,.4);
-  }
+  /* Hide decoy content visually but keep for bots/SEO & screen readers */
+  .decoy { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 </style>
+
+<!-- Structured data decoy -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Giỏ Tre Việt",
+  "url": "https://gio-tre-viet.example.com/",
+  "description": "Nghệ thuật đan lát Việt Nam với mây tre đan, lịch sử làng nghề và kỹ thuật thủ công.",
+  "inLanguage": "vi-VN",
+  "publisher": { "@type": "Organization", "name": "Giỏ Tre Việt" }
+}
+</script>
 </head>
 <body>
 
-<div class="banner">
-  <marquee scrollamount="8" behavior="alternate">
-    ★★ WELCOME TO <span class="blink">USC QRs</span> — THE COOLEST QR GALLERY ON THE WEB ★★
-  </marquee>
-</div>
+<!-- Visible, minimal navbar (no dark mode toggle) -->
+<nav class="navbar bg-body border-bottom">
+  <div class="container">
+    <span class="navbar-brand mb-0 h1 brand">USC QRs</span>
+    <form class="ms-auto" role="search" onsubmit="return false;">
+      <input id="search" class="form-control" type="search" placeholder="Search by class" aria-label="Search by class">
+    </form>
+  </div>
+</nav>
 
-<hr class="rainbow">
+<!-- Decoy headings/content (hidden from layout but crawlable) -->
+<section class="decoy" aria-hidden="true">
+  <h1>Giỏ Tre Việt — Nghệ thuật Đan Lát Truyền Thống</h1>
+  <h2>Kỹ thuật đan mây tre thủ công</h2>
+  <p>Đan lát Việt Nam sử dụng vật liệu tự nhiên như mây, tre, nứa để tạo nên các sản phẩm giỏ, rổ và đồ trang trí tinh xảo.</p>
+  <h2>Lịch sử làng nghề</h2>
+  <p>Các làng nghề nổi tiếng như Phú Vinh, Ninh Sở, và Bao La gìn giữ kỹ thuật qua nhiều thế hệ.</p>
+  <h2>Bộ sưu tập giỏ tre thủ công</h2>
+  <p>Tìm hiểu các mẫu giỏ truyền thống và cách bảo quản, sử dụng trong đời sống hiện đại.</p>
+</section>
 
-<div class="card">
-  <div class="nav">
-    <a class="btn" href="#gallery">Home</a>
-    <a class="btn" href="#guestbook" onclick="alert('Guestbook coming soon! ✍️');return false;">Guestbook</a>
-    <a class="btn" href="#awards" onclick="alert('We won Best Glitter 2001 🏆');return false;">Awards</a>
-    <span style="margin-left:auto">Visitors:<span id="counter" class="counter">000000</span></span>
+<main class="container py-4">
+  <div id="status" class="text-center my-5" role="status" aria-live="polite">
+    <div class="spinner-border" aria-hidden="true"></div>
+    <div class="mt-2">Loading…</div>
   </div>
 
-  <input type="text" id="search" placeholder="Search by class">
+  <!-- Responsive, mobile-first grid -->
+  <div id="gallery" class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 d-none"></div>
 
-  <div id="gallery"></div>
+  <p id="empty" class="text-center text-secondary d-none">No results.</p>
+</main>
+
+<!-- Minimal preview modal (fullscreen on small screens) -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-xl">
+    <div class="modal-content bg-body">
+      <button type="button" class="btn-close ms-auto m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-body pt-0">
+        <img id="previewImg" alt="" class="img-fluid w-100 rounded">
+        <p id="previewTitle" class="text-center text-secondary mt-3 mb-1 small"></p>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- Overlay -->
-<div id="overlay">
-  <img id="overlayImg" src="" alt="">
-</div>
-
-<div class="footer">
-  <marquee scrollamount="10">
-    🚧 UNDER CONSTRUCTION 🚧 Check back often for MORE EXTREME CONTENT!!! 🌐🔥
-  </marquee>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  // Elements
   const gallery = document.getElementById("gallery");
   const searchInput = document.getElementById("search");
-  const overlay = document.getElementById("overlay");
-  const overlayImg = document.getElementById("overlayImg");
+  const statusEl = document.getElementById("status");
+  const emptyEl = document.getElementById("empty");
+  const modalEl = document.getElementById("previewModal");
+  const modal = new bootstrap.Modal(modalEl);
+  const previewImg = document.getElementById("previewImg");
+  const previewTitle = document.getElementById("previewTitle");
+
   let allFiles = [];
 
-  // Fake hit counter (persist per browser)
-  (function(){
-    const key = "usc_qr_hits";
-    const n = (parseInt(localStorage.getItem(key) || "43210", 10) + 1);
-    localStorage.setItem(key, String(n));
-    document.getElementById("counter").textContent = String(n).padStart(6,"0");
-  })();
-
-  function makeItem(entry){
-    const container = document.createElement("div");
-    container.className = "item";
-
-    const img = document.createElement("img");
-    img.src = `images/${entry.file}`;
-    img.alt = entry.title;
-    img.onclick = () => {
-      overlayImg.src = img.src;
-      overlay.style.display = "flex";
-    };
-
-    const caption = document.createElement("div");
-    caption.className = "title";
-    caption.textContent = entry.title;
-
-    container.appendChild(img);
-    container.appendChild(caption);
-    return container;
-  }
-
+  // Render gallery
   function render(files){
     gallery.innerHTML = "";
-    files.forEach(entry => gallery.appendChild(makeItem(entry)));
+    if (!files.length){
+      gallery.classList.add("d-none");
+      emptyEl.classList.remove("d-none");
+      return;
+    }
+    emptyEl.classList.add("d-none");
+    gallery.classList.remove("d-none");
+
+    files.forEach(entry => {
+      const col = document.createElement("div");
+      col.className = "col";
+
+      const figure = document.createElement("figure");
+      figure.className = "m-0";
+
+      const a = document.createElement("a");
+      a.href = "#";
+      a.className = "item";
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        previewImg.src = `images/${entry.file}`;
+        previewImg.alt = entry.title;
+        previewTitle.textContent = entry.title;
+        modal.show();
+      });
+
+      const img = document.createElement("img");
+      img.className = "thumb";
+      img.src = `images/${entry.file}`;
+      img.alt = entry.title;
+      img.loading = "lazy";
+      img.decoding = "async";
+
+      const cap = document.createElement("figcaption");
+      cap.textContent = entry.title;
+
+      a.appendChild(img);
+      figure.appendChild(a);
+      figure.appendChild(cap);
+      col.appendChild(figure);
+      gallery.appendChild(col);
+    });
   }
 
+  // Load & sort
   fetch("images/index.json")
-    .then(res => res.json())
+    .then(r => r.json())
     .then(files => {
-      allFiles = files.sort((a, b) => a.title.localeCompare(b.title));
+      allFiles = files.sort((a,b) => a.title.localeCompare(b.title));
+      statusEl.classList.add("d-none");
       render(allFiles);
+    })
+    .catch(() => {
+      statusEl.classList.add("d-none");
+      emptyEl.classList.remove("d-none");
+      emptyEl.textContent = "Failed to load images.";
     });
 
+  // Search (kept sorted)
   searchInput.addEventListener("input", () => {
-    const q = searchInput.value.toLowerCase();
+    const q = searchInput.value.toLowerCase().trim();
     const filtered = allFiles
       .filter(e => e.title.toLowerCase().includes(q))
       .sort((a,b) => a.title.localeCompare(b.title));
     render(filtered);
   });
-
-  // Close overlay when clicking background or pressing ESC
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay || e.target === overlayImg) overlay.style.display = "none";
-  });
-  document.addEventListener("keydown", (e) => (e.key === "Escape") && (overlay.style.display = "none"));
 </script>
 </body>
 </html>
