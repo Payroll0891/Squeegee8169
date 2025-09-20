@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>USC QRs :D</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏃</text></svg>">
-
 <style>
   body { 
     font-family: monospace; 
@@ -33,8 +26,9 @@
     display: inline-block; 
     margin: 10px; 
     text-align: center; 
+    position: relative;
   }
-  img { 
+  .item img { 
     max-width: 200px; 
     display: block; 
     cursor: pointer; 
@@ -42,15 +36,23 @@
     border: 2px solid #00ff00;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  img:hover {
+  .item img:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px #00ff00;
   }
   .title { 
-    margin-top: 6px; 
-    font-size: 14px; 
-    color: #00ff00; 
-    text-shadow: 0 0 6px #00ff00;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #00ff00;
+    text-shadow: 0 0 6px #00ff00, 0 0 10px #000;
+    font-size: 14px;
+    background: rgba(0,0,0,0.6);
+    padding: 4px 8px;
+    border-radius: 4px;
+    max-width: 90%;
+    white-space: normal;
   }
 
   /* Overlay styles */
@@ -71,78 +73,3 @@
     border: 2px solid #00ff00;
   }
 </style>
-</head>
-<body>
-<h1>USC QRs</h1>
-
-<input type="text" id="search" placeholder="Search by class">
-
-<div id="gallery"></div>
-
-<!-- Overlay -->
-<div id="overlay">
-  <img id="overlayImg" src="" alt="">
-</div>
-
-<script>
-const gallery = document.getElementById("gallery");
-const searchInput = document.getElementById("search");
-const overlay = document.getElementById("overlay");
-const overlayImg = document.getElementById("overlayImg");
-let allFiles = [];
-
-function render(files) {
-  gallery.innerHTML = "";
-  files.forEach(entry => {
-    const container = document.createElement("div");
-    container.className = "item";
-
-    const img = document.createElement("img");
-    img.src = `images/${entry.file}`;
-    img.alt = entry.title;
-    img.onclick = () => {
-      overlayImg.src = img.src;
-      overlay.style.display = "flex";
-    };
-
-    const caption = document.createElement("div");
-    caption.className = "title";
-    caption.textContent = entry.title;
-
-    container.appendChild(img);
-    container.appendChild(caption);
-    gallery.appendChild(container);
-  });
-}
-
-fetch("images/index.json")
-  .then(res => res.json())
-  .then(files => {
-    allFiles = files.sort((a, b) => a.title.localeCompare(b.title));
-    render(allFiles);
-  });
-
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase();
-  const filtered = allFiles
-    .filter(entry => entry.title.toLowerCase().includes(query))
-    .sort((a, b) => a.title.localeCompare(b.title));
-  render(filtered);
-});
-
-// Close overlay when clicking outside the image
-overlay.addEventListener("click", (e) => {
-  if (e.target === overlay || e.target === overlayImg) {
-    overlay.style.display = "none";
-  }
-});
-
-// Close overlay with ESC key
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    overlay.style.display = "none";
-  }
-});
-</script>
-</body>
-</html>
