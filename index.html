@@ -6,11 +6,28 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏃</text></svg>">
 
 <style>
-  body { font-family: sans-serif; background: #f0f0f0; }
+  body { font-family: sans-serif; background: #f0f0f0; margin: 0; }
   #search { margin: 20px; padding: 8px; width: 250px; font-size: 14px; }
   .item { display: inline-block; margin: 10px; text-align: center; }
   img { max-width: 200px; display: block; cursor: pointer; border-radius: 6px; }
   .title { margin-top: 6px; font-size: 14px; color: #333; }
+
+  /* Overlay styles */
+  #overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  #overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #000;
+  }
 </style>
 </head>
 <body>
@@ -20,10 +37,18 @@
 
 <div id="gallery"></div>
 
+<!-- Overlay -->
+<div id="overlay">
+  <img id="overlayImg" src="" alt="">
+</div>
+
 <script>
 const gallery = document.getElementById("gallery");
 const searchInput = document.getElementById("search");
+const overlay = document.getElementById("overlay");
+const overlayImg = document.getElementById("overlayImg");
 let allFiles = [];
+
 function render(files) {
   gallery.innerHTML = "";
   files.forEach(entry => {
@@ -33,7 +58,10 @@ function render(files) {
     const img = document.createElement("img");
     img.src = `images/${entry.file}`;
     img.alt = entry.title;
-    img.onclick = () => window.open(img.src, "_blank");
+    img.onclick = () => {
+      overlayImg.src = img.src;
+      overlay.style.display = "flex";
+    };
 
     const caption = document.createElement("div");
     caption.className = "title";
@@ -44,12 +72,14 @@ function render(files) {
     gallery.appendChild(container);
   });
 }
+
 fetch("images/index.json")
   .then(res => res.json())
   .then(files => {
     allFiles = files;
     render(allFiles);
   });
+
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.toLowerCase();
   const filtered = allFiles.filter(entry =>
@@ -57,7 +87,20 @@ searchInput.addEventListener("input", () => {
   );
   render(filtered);
 });
+
+// Close overlay when clicking outside the image
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay || e.target === overlayImg) {
+    overlay.style.display = "none";
+  }
+});
+
+// Close overlay with ESC key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    overlay.style.display = "none";
+  }
+});
 </script>
 </body>
 </html>
-
