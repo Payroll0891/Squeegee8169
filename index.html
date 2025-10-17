@@ -37,13 +37,17 @@
   body { background: #fff; color: #212529; }
   .brand { letter-spacing:.2px; }
   .thumb {
-    display:block; width:100%; height:auto; border-radius:.75rem;
+    display:block;
+    width:100%;
+    height:160px; /* normalized height */
+    object-fit:cover; /* crop to maintain consistency */
+    border-radius:.75rem;
     background-color: var(--bs-secondary-bg);
     transition: transform .15s ease, box-shadow .15s ease;
   }
   .thumb:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.08); }
   .item { display:block; text-decoration:none; color:inherit; }
-  figcaption { font-size:.9rem; color: var(--bs-secondary-color); margin-top:.5rem; }
+  figcaption { font-size:.9rem; color: var(--bs-secondary-color); margin-top:.5rem; text-align:center; }
   #status { color: var(--bs-secondary-color); }
 
   /* Hide decoy content visually but keep for bots/SEO & screen readers */
@@ -113,7 +117,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  // Elements
   const gallery = document.getElementById("gallery");
   const searchInput = document.getElementById("search");
   const statusEl = document.getElementById("status");
@@ -125,7 +128,6 @@
 
   let allFiles = [];
 
-  // Render gallery
   function render(files){
     gallery.innerHTML = "";
     if (!files.length){
@@ -172,7 +174,6 @@
     });
   }
 
-  // Load & sort
   fetch("images/index.json")
     .then(r => r.json())
     .then(files => {
@@ -186,7 +187,6 @@
       emptyEl.textContent = "Failed to load images.";
     });
 
-  // Search (kept sorted)
   searchInput.addEventListener("input", () => {
     const q = searchInput.value.toLowerCase().trim();
     const filtered = allFiles
